@@ -11,7 +11,7 @@
   <meta charset="utf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <title>using-the-scanner</title>
+  <title>index</title>
 
   <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
   <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
@@ -26,35 +26,24 @@
   
   <script src="/app/common.js"></script>
   
-  <script src="/app/example.js"></script>
+  <script src="/app/main.js"></script>
   
 </head>
-<body ng-app="example">
+<body ng-app="main">
 
-<super-navbar>
-  <super-navbar-title>
-    Using the Scanner
-  </super-navbar-title>
-</super-navbar>
+<div ng-controller="IndexController">
 
-<div class="padding">
+  <super-navbar>
+    <super-navbar-title>
+      Index
+    </super-navbar-title>
+  </super-navbar>
 
-  <p>To restart your current app or scan another app, follow the instructions below.</p>
-
-  <div class="card padding">
-    <h3>On iOS</h3>
-    <p class="positive"><strong>Tap and hold on the screen with three fingers.</strong></p>
-    <p>This opens the Scanner context menu.</p>
-  </div>
-
-  <div class="card padding">
-    <h3>On Android</h3>
-    <p class="balanced"><strong>Press the native back button in your app's root view.</strong></p>
-    <p>This will return you to the initial Scan screen.</p>
+  <div class="padding">
+    <h1>Pow! Here's your fresh module!</h1>
   </div>
 
 </div>
-
 
 </body>
 </html>
