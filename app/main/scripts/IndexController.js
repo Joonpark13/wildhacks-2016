@@ -1,6 +1,6 @@
 angular
   .module('main')
-  .controller('IndexController', function($scope, supersonic) {
+  .controller('IndexController', function($scope, $http, supersonic) {
     supersonic.ui.tabs.hide();
 
     var app = new Clarifai.App(
@@ -18,7 +18,35 @@ angular
         app.models.predict(Clarifai.FOOD_MODEL, result).then(
           function(response) {
             supersonic.logger.log(response); // Required ???
-            $scope.response = response.data.outputs[0].data.concepts;
+            var concepts = response.data.outputs[0].data.concepts;
+            var tags = [];
+            for (var i=0; i<concepts.length; i++){
+                if (concepts[i]['value'] > .8)
+                    tags.push(concepts[i]['name']);
+            }
+            $scope.response = "Tags found:\n" + tags.join(' ');
+
+            var url = 'https://api.edamam.com/search'
+            var tag_query = tags.join('&');
+            var params = {
+                'app_id'  : '9bf324ca',
+                'app_key' : '91243d2ab000b59fa19107ed4e5c2853',
+                'q'       : tag_query,
+                'to'      : 4
+            };
+            
+
+            $http.get(url, params).then(
+                    function(response){
+                        var data = response.data;
+                        $scope.response += "FUCK MICHIGAN";
+                    },
+                    function(error){
+                        supersonic.logger.log(err); // Required ???
+                        $scope.response += "FUCK IOWA";
+                        $scope.response = err;
+                    });
+
           },
           function(err) {
             supersonic.logger.log(err); // Required ???
