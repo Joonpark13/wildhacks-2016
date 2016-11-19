@@ -23,6 +23,8 @@
   <script src="/components/supersonic/supersonic.js"></script>
   <script src="/components/webcomponentsjs/webcomponents-lite.js"></script>
 
+  <script type="text/javascript" src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
+
   
   <script src="/app/common.js"></script>
   
@@ -35,12 +37,12 @@
 
   <super-navbar>
     <super-navbar-title>
-      Index
+      Food Detection
     </super-navbar-title>
   </super-navbar>
 
   <div class="padding">
-    <h1>Pow! Here's your fresh module!</h1>
+    {{response}}
   </div>
 
 </div>
