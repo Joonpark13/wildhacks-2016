@@ -15,44 +15,34 @@ angular
         destinationType:'dataURL',
         quality:50
       }).then(function(result) {
-        app.models.predict(Clarifai.FOOD_MODEL, result).then(
-          function(response) {
-            supersonic.logger.log(response); // Required ???
-            var concepts = response.data.outputs[0].data.concepts;
-            var tags = [];
-            for (var i=0; i<concepts.length; i++){
-                if (concepts[i]['value'] > .8)
-                    tags.push(concepts[i]['name']);
-            }
-            $scope.response = "Tags found:\n" + tags.join(' ');
+        return app.models.predict(Clarifai.FOOD_MODEL, result);
+      }).then(function(prediction) {
+        supersonic.logger.log(prediction); // Required ???
 
-            var url = 'https://api.edamam.com/search'
-            var tag_query = tags.join('&');
-            var params = {
-                'app_id'  : '9bf324ca',
-                'app_key' : '91243d2ab000b59fa19107ed4e5c2853',
-                'q'       : tag_query,
-                'to'      : 4
-            };
-            
+        var concepts = prediction.data.outputs[0].data.concepts;
+        var tags = [];
+        for (var i = 0; i < concepts.length; i++){
+            if (concepts[i]['value'] > .8)
+                tags.push(concepts[i]['name']);
+        }
+        $scope.response = "Tags found:\n" + tags.join(' ');
 
-            $http.get(url, params).then(
-                    function(response){
-                        var data = response.data;
-                        $scope.response += "FUCK MICHIGAN";
-                    },
-                    function(error){
-                        supersonic.logger.log(err); // Required ???
-                        $scope.response += "FUCK IOWA";
-                        $scope.response = err;
-                    });
+        var url = 'https://api.edamam.com/search';
+        var tag_query = tags.join('&');
+        var params = {
+            'app_id'  : '9bf324ca',
+            'app_key' : '91243d2ab000b59fa19107ed4e5c2853',
+            'q'       : tag_query,
+            'to'      : 4
+        };
 
-          },
-          function(err) {
-            supersonic.logger.log(err); // Required ???
-            $scope.response = err;
-          }
-        );
+        return $http.get(url, params);
+      }).then(function(response) {
+        var data = response.data;
+        $scope.response += "FUCK MICHIGAN";
+      }).catch(function(err) {
+        supersonic.logger.log(err); // Required ???
+        $scope.response = err;
       });
     };
   });
