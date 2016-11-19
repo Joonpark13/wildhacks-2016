@@ -10,19 +10,21 @@ angular
 
     $scope.response = '';
 
-    supersonic.media.camera.takePicture({
-      destinationType:'dataURL',
-      quality:50
-    }).then(function(result) {
-      app.models.predict(Clarifai.GENERAL_MODEL, result).then(
-        function(response) {
-          supersonic.logger.log(response); // Required ???
-          $scope.response = response.data.outputs[0].data.concepts;
-        },
-        function(err) {
-          supersonic.logger.log(err); // Required ???
-          $scope.response = err;
-        }
-      );
-    });
+    $scope.takePicture = function() {
+      supersonic.media.camera.takePicture({
+        destinationType:'dataURL',
+        quality:50
+      }).then(function(result) {
+        app.models.predict(Clarifai.FOOD_MODEL, result).then(
+          function(response) {
+            supersonic.logger.log(response); // Required ???
+            $scope.response = response.data.outputs[0].data.concepts;
+          },
+          function(err) {
+            supersonic.logger.log(err); // Required ???
+            $scope.response = err;
+          }
+        );
+      });
+    };
   });
