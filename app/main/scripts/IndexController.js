@@ -16,6 +16,12 @@ angular
     );
 
     $scope.takePicture = function() {
+      // resest
+      $scope.tags = [];
+      $scope.picture = '';
+      $scope.checkboxModel = {};
+      $scope.selected = [];
+
       supersonic.media.camera.takePicture({
         destinationType: 'dataURL',
         quality: 50
@@ -37,9 +43,13 @@ angular
     };
 
     $scope.submit = function() {
+      // reset
+      $scope.selected = [];
+
       for (var key in $scope.checkboxModel) {
         if ($scope.checkboxModel.hasOwnProperty(key)) {
-          $scope.selected.push(key);
+          if ($scope.checkboxModel[key])
+            $scope.selected.push(key);
         }
       }
 
