@@ -10,18 +10,19 @@ angular
 
       $scope.cautions = [];
       $scope.recipes = [];
+      $scope.actual_info = [];
 
       $http.get(backend_url, options).then(function(response) {
+        var r = response.data;
         var num_recipes = r.to;
         var recipes = r.hits;
-        $scope.actual_info = [];
 
         recipes.forEach(function(entry) {
             $scope.actual_info.push({
                 name: entry.recipe.label,
-                image_url: entry.recipe.image_url,
+                imageUrl: entry.recipe.image,
                 cautions: entry.recipe.cautions,
-                health_labels: entry.recipe.health_labels
+                healthLabels: entry.recipe.healthLabels
             });
 
             entry.recipe.cautions.forEach(function(caution) {

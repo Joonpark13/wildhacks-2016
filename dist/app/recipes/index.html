@@ -42,13 +42,33 @@
   </super-navbar>
 
   <div class="padding">
-    <div class="card">
-      {{ cautions }}
+    <div ng-if="cautions.length !== 0" class="card">
+      <div class="item item-divider item-text-wrap">
+        WARNING: The following allergens may appear in the recipes below.
+      </div>
       <div class="item item-text-wrap">
-        This is a basic Card which contains an item that has wrapping text.
+        <ul ng-repeat="caution in cautions" class="list">
+          <li class="item">
+            {{ caution }}
+          </li>
+        </ul>
       </div>
     </div>
-    {{ actual_info }}
+
+    <div class="card">
+      <div class="item item-text-wrap">
+        {{ actual_info }}
+        <div ng-repeat="recipe in actual_info" class="list">
+          <div class="item item-divider">
+            {{ recipe }}
+          </div>
+
+          <!--<a class="item" href="#">
+            Butterfinger
+          </a>-->
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
