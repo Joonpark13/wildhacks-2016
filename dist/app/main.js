@@ -5,31 +5,50 @@ angular.module('main', [
 
 angular
   .module('main')
-  .controller('IndexController', function($scope, supersonic) {
+  .controller('IndexController', function($scope, supersonic, $http) {
     supersonic.ui.tabs.hide();
+
+    var THRESHOLD = 0.8;
+
+    $scope.tags = [];
+    $scope.picture = '';
+    $scope.checkboxModel = {};
+    $scope.selected = [];
 
     var app = new Clarifai.App(
       'SP-cvdgsUVI-mFzs2oAFdWM1GUdkfGk_URKBPGwU',
       'o7s0YcPwIKl6Re-Kn5rYYJptnH4PiFN9oyGg7YC4'
     );
 
-    $scope.response = '';
-
     $scope.takePicture = function() {
       supersonic.media.camera.takePicture({
-        destinationType:'dataURL',
-        quality:50
+        destinationType: 'dataURL',
+        quality: 50
       }).then(function(result) {
-        app.models.predict(Clarifai.FOOD_MODEL, result).then(
-          function(response) {
-            supersonic.logger.log(response); // Required ???
-            $scope.response = response.data.outputs[0].data.concepts;
-          },
-          function(err) {
-            supersonic.logger.log(err); // Required ???
-            $scope.response = err;
-          }
-        );
+        $scope.picture = result;
+        return app.models.predict(Clarifai.FOOD_MODEL, result);
+      }).then(function(prediction) {
+        var concepts = prediction.data.outputs[0].data.concepts;
+        for (var i = 0; i < concepts.length; i++) {
+            if (concepts[i].value > THRESHOLD) {
+              var foodname = concepts[i].name;
+              $scope.tags.push(foodname);
+              $scope.checkboxModel[foodname] = false;
+            }
+        }
+      }).catch(function(err) {
+        supersonic.logger.log(err);
       });
+    };
+
+    $scope.submit = function() {
+      for (var key in $scope.checkboxModel) {
+        if ($scope.checkboxModel.hasOwnProperty(key)) {
+          $scope.selected.push(key);
+        }
+      }
+
+      var view = new supersonic.ui.View("recipes#index?keywords=" + JSON.stringify($scope.selected));
+      supersonic.ui.layers.push(view);
     };
   });

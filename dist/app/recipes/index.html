@@ -28,53 +28,21 @@
   
   <script src="/app/common.js"></script>
   
-  <script src="/app/main.js"></script>
+  <script src="/app/recipes.js"></script>
   
 </head>
-<body ng-app="main">
+<body ng-app="recipes">
 
 <div ng-controller="IndexController">
 
   <super-navbar>
     <super-navbar-title>
-      Will This Kill Me?
+      Index
     </super-navbar-title>
   </super-navbar>
 
   <div class="padding">
-    <div ng-if="tags.length !== 0">
-      <div class="card">
-        <div class="item item-text-wrap">
-          <img class="picture" src="data:image/png;base64, {{ picture }}" />
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="item item-divider">
-          Select the foods that describe the picture best:
-        </div>
-
-        <div class="item item-text-wrap">
-          <div ng-repeat="food in tags" class="list">
-            <div class="item item-checkbox">
-              {{food}}
-              <label class="checkbox">
-                <input type="checkbox" ng-model="checkboxModel[food]">
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button ng-click="submit()" class="button button-block button-positive">Submit</button>
-    </div>
-
-    {{ tags }}
-    {{ checkboxModel }}
-
-    <button ng-click="takePicture()" class="button button-block button-positive">
-      Take a Picture of food!
-    </button>
+    <h1>Pow! Here's your fresh module!</h1>
   </div>
 
 </div>
