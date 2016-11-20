@@ -22,7 +22,7 @@
 
     <div class="card">
       <div class="item item-text-wrap">
-        <div ng-repeat="recipe in actual_info" class="list">
+        <div ng-repeat="recipe in actual_info" class="list list-inset">
           <a class="item item-thumbnail-left" href="#">
             <img src="{{ recipe.imageUrl }}">
             
@@ -31,11 +31,8 @@
             <p ng-if="recipe.cautions.length === 0">Cautions: None</p>
             <p ng-if="recipe.cautions.length !== 0">Cautions: {{ recipe.cautions }}</p>
 
-            <div ng-repeat="label in recipe.healthLabels" class="list list-inset">
-              <div class="item">
-                {{ label }}
-              </div>
-            </div>
+            <p ng-if="recipe.healthLabels.length === 0">Health Labels: None</p>
+            <p ng-if="recipe.healthLabels.length !== 0">Health Labels: {{ recipe.healthLabels }}</p>
           </a>
         </div>
       </div>

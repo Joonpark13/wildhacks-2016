@@ -21,8 +21,8 @@ angular
             $scope.actual_info.push({
                 name: entry.recipe.label,
                 imageUrl: entry.recipe.image,
-                cautions: entry.recipe.cautions,
-                healthLabels: entry.recipe.healthLabels
+                cautions: entry.recipe.cautions.join(", "),
+                healthLabels: entry.recipe.healthLabels.join(", ")
             });
 
             entry.recipe.cautions.forEach(function(caution) {
