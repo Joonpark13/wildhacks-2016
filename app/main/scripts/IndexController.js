@@ -1,8 +1,18 @@
 angular
   .module('main')
-  .controller('IndexController', function($scope, $http, supersonic) {
+  .controller('IndexController', function($scope, supersonic, $http) {
     supersonic.ui.tabs.hide();
+    $scope.response = 'RESPONSE';
+    var url = "127.0.0.1:5000";
+    $http.get(url).success(function(response){
+        $scope.response = "WORKED";
+    }).error(function(err){
+        $scope.response = err.toString();
+    });
+  });
 
+
+/*
     var app = new Clarifai.App(
       'SP-cvdgsUVI-mFzs2oAFdWM1GUdkfGk_URKBPGwU',
       'o7s0YcPwIKl6Re-Kn5rYYJptnH4PiFN9oyGg7YC4'
@@ -27,8 +37,9 @@ angular
         }
         $scope.response = "Tags found:\n" + tags.join(' ');
 
-        var url = 'https://api.edamam.com/search';
-        var tag_query = tags.join('&');
+//        var url = 'https://api.edamam.com/search';
+        var tag_query = tags.join('%20');
+        /*
         var params = {
             'app_id'  : '9bf324ca',
             'app_key' : '91243d2ab000b59fa19107ed4e5c2853',
@@ -36,7 +47,8 @@ angular
             'to'      : 4
         };
 
-        return $http.get(url, params);
+        var url = 'http://wwakljsfhaskljdfhw.google.com';
+        return $http.get(url);
       }).then(function(response) {
         var data = response.data;
         $scope.response += "FUCK MICHIGAN";
@@ -46,3 +58,4 @@ angular
       });
     };
   });
+*/
